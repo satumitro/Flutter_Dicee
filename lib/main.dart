@@ -1,82 +1,92 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(
-    MaterialApp(
-      home: Scaffold(
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Scaffold(
+      backgroundColor: Colors.green[900],
+      appBar: AppBar(
+        title: Text("Dice Roll App By Satu Mitro"),
         backgroundColor: Colors.red,
-        appBar: AppBar(
-          title: const Text("Dicee"),
-          backgroundColor: Colors.red,
-        ),
-        body: const dice(),
       ),
+      body: dicepage(),
     ),
-  );
+  ));
 }
 
-// // ignore: camel_case_types
-// class dice extends StatelessWidget {
-//   const dice({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//       child: Row(
-//         children: [
-//           Expanded(
-//             child: Padding(
-//               padding: const EdgeInsets.all(16.0),
-//               child: Image.asset("assets/dice1.png"),
-//             ),
-//           ),
-//           Expanded(
-//             child: Padding(
-//               padding: const EdgeInsets.all(16.0),
-//               child: Image.asset("assets/dice2.png"),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-// ignore: camel_case_types
-class dice extends StatefulWidget {
-  const dice({Key? key}) : super(key: key);
+class dicepage extends StatefulWidget {
+  dicepage({Key? key}) : super(key: key);
 
   @override
-  _diceState createState() => _diceState();
+  _dicepageState createState() => _dicepageState();
 }
 
-// ignore: camel_case_types
-class _diceState extends State<dice> {
-  int leftDice = 1;
-  int rightDice = 1;
+class _dicepageState extends State<dicepage> {
+  int leftDiceNumber = 1;
+  int rightDicenumber = 1;
+  void changeDiceFace() {
+    setState(() {
+      leftDiceNumber = Random().nextInt(6) + 1;
+      rightDicenumber = Random().nextInt(6) + 1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Row(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
-            child: TextButton(
-              onPressed: () {
-                setState(() {
-                  leftDice = Random().nextInt(6) + 1;
-                });
-              },
-              child: Image.asset("assets/dice$leftDice.png"),
-            ),
+          Padding(padding: EdgeInsets.only(top: 20)),
+          Row(
+            children: [
+              Expanded(
+                  // ignore: deprecated_member_use
+                  child: FlatButton(
+                // padding: EdgeInsets.fromLTRB(10, 120, 10, 120),
+                onPressed: () {
+                  changeDiceFace();
+                },
+                child: Image.asset(
+                  "assets/dice$leftDicenumber.png",
+                ),
+              )),
+              Expanded(
+                  // ignore: deprecated_member_use
+                  child: FlatButton(
+                // padding: EdgeInsets.fromLTRB(10, 120, 10, 120),
+                onPressed: () {
+                  changeDiceFace();
+                },
+                child: Image.asset(
+                  "assets/dice$rightDicenumber.png",
+                ),
+              )),
+            ],
           ),
-          Expanded(
-            child: TextButton(
+          Padding(padding: EdgeInsets.only(top: 50)),
+          SizedBox(
+            height: 100,
+          ),
+          Container(
+            height: 60,
+            width: 200,
+            decoration: BoxDecoration(
+                color: Colors.red, borderRadius: BorderRadius.circular(15)),
+            child: FlatButton(
+              
               onPressed: () {
-                setState(() {
-                  rightDice = Random().nextInt(6) + 1;
-                });
+                changeDiceFace();
               },
-              child: Image.asset("assets/dice$rightDice.png"),
+              child: const Text(
+                "Roll Dice",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ],
